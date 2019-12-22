@@ -3,6 +3,7 @@
 </template>
 
 <script>
+import {getHomeData} from '../../service/api/index';
   export default {
   name:"Home",
     components:{},
@@ -11,6 +12,10 @@
       return {
 
       }
+    },
+   async created() {
+      // const data = await getHomeData();
+      // console.log(data);
     },
   }
 </script>
