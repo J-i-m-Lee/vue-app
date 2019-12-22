@@ -1,12 +1,17 @@
 <template>
-  <div id="home">Home</div>
+  <div id="home">
+    <Header/>
+  </div>
 </template>
 
 <script>
+import Header from './components/header/Header'
 import {getHomeData} from '../../service/api/index';
   export default {
   name:"Home",
-    components:{},
+    components:{
+      Header
+    },
     props:{},
     data(){
       return {
