@@ -1,0 +1,68 @@
+<template>
+  <div class="wrapper">
+    <div class="itemWrapper" v-for="(nav, index) in nav_list" :key="nav.meteria_id">
+      <div class="imageWrapper">
+        <img
+          class="image"
+          :src="nav.icon_url"
+          :alt="nav.name"
+        />
+      </div>
+      <div class="titleWrapper">
+        <p class="title">{{nav.name}}</p>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script>
+export default {
+  name: "NavItem",
+  components: {},
+  props: {
+    nav_list:Array
+  },
+  data() {
+    return {}
+  }
+}
+</script>
+<style lang="css" scoped>
+.wrapper {
+  padding-top: 0.5rem;
+  background: #fff;
+  padding-bottom: 0.5rem;
+}
+
+.itemWrapper {
+  display: inline-block;
+  padding-top: 0.2rem;
+  width: 20%;
+}
+
+.imageWrapper {
+  padding-bottom: 58.823%;
+  height: 0;
+  overflow: hidden;
+  text-align: center;
+}
+
+.image {
+  width: 58.823%;
+  height: auto;
+  display: inline-block;
+}
+
+.titleWrapper {
+  padding: 0.4375rem 0.3125rem 0.375rem 0.3125rem;
+}
+
+.title {
+  font-size: 0.7rem;
+  color: #555555;
+  text-align: center;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+</style>

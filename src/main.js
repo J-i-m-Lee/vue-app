@@ -5,8 +5,8 @@ import router from './router/index'
 /* 三百毫秒点击延迟 */
 import FastClick from 'fastclick'
 if ('addEventListener' in document) {
-  document.addEventListener('DOMContentLoaded', function() {
-      FastClick.attach(document.body);
+  document.addEventListener('DOMContentLoaded', function () {
+    FastClick.attach(document.body);
   }, false);
 }
 
@@ -14,7 +14,7 @@ if ('addEventListener' in document) {
 import './style/common.less';
 // 3. 引入全局UI组件库-vant
 import '@/plugins/vant';
-
+import './config/rem';
 
 Vue.config.productionTip = false
 

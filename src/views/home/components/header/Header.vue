@@ -61,8 +61,8 @@ export default {
   left: 0;
   top: 0;
   z-index: 2;
-  height: 3.125rem;
-  line-height: 3.125rem;
+  height: 2.8rem;
+  line-height: 2.8rem;
   width: 100%;
   box-sizing: border-box;
   background: white;
@@ -73,7 +73,7 @@ export default {
 .iconLocation {
   position: absolute;
   left: 0.3rem;
-  top: 1.0625rem;
+  top: 1rem;
   width: 1.875rem;
   height: 1rem;
   vertical-align: middle;
@@ -81,7 +81,7 @@ export default {
 
 .locationWrapper {
   float: left;
-  height: 3.125rem;
+  height: 2.8rem;
   width: 40%;
   white-space: nowrap;
   opacity: 1;
@@ -90,7 +90,7 @@ export default {
 .locationWrapper .address {
   padding-left: 1.875rem;
   display: inline-block;
-  font-size: 0.9rem;
+  font-size: 0.8rem;
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
@@ -110,9 +110,9 @@ export default {
 
 .searchWrapper {
   position: absolute;
-  top: 0.625rem;
+  top: 0.5rem;
   right: 2%;
-  line-height: 3.125rem;
+  line-height: 2.8rem;
   text-align: right;
   width: 50%;
   vertical-align: middle;
@@ -141,7 +141,7 @@ export default {
 }
 
 .iconSearch {
-  margin-top: 0.3125rem;
+  margin-top: 0.4125rem;
   width: 1.25rem;
   height: 1.25rem;
 }

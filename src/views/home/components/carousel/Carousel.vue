@@ -1,26 +1,19 @@
 <template>
-  <swiper
-    id="carousel"
-    :options="swiperOption"
-    ref="mySwiper"
-  >
+  <swiper id="carousel" :options="swiperOption" ref="mySwiper">
     <!-- slides -->
-    <swiper-slide v-for="(banner) in banner_list" :key=banner.meteria_id>
-        <img :src="banner.icon_url" :alt="banner.public_name">
+    <swiper-slide v-for="banner in banner_list" :key="banner.meteria_id">
+      <img :src="banner.icon_url" :alt="banner.public_name" />
     </swiper-slide>
 
     <!-- Optional controls -->
-    <div
-      class="swiper-pagination"
-      slot="pagination"
-    ></div>
+    <div class="swiper-pagination" slot="pagination"></div>
   </swiper>
 </template>
 
 <script>
-import "swiper/dist/css/swiper.css";
+import "swiper/dist/css/swiper.css"
 
-import { swiper, swiperSlide } from "vue-awesome-swiper";
+import { swiper, swiperSlide } from "vue-awesome-swiper"
 
 export default {
   name: "Carousel",
@@ -43,10 +36,11 @@ export default {
         },
         pagination: {
           el: ".swiper-pagination",
-          clickable: true
+          clickable: true,
+          bulletActiveClass: "my-bullet-active"
         }
       }
-    };
+    }
   }
   //  computed: {
   //   swiper() {
@@ -59,16 +53,19 @@ export default {
   //   console.log('this is current swiper instance object', this.swiper)
   //   this.swiper.slideTo(3, 1000, false)
   // }
-};
+}
 </script>
-<style lang="css" scoped>
+<style lang="css">
 #carousel {
   width: 100%;
-  height: 15rem;
-  background-color: #ff8000;
+  height: 13rem;
 }
 #carousel img {
-    width: 100%;
-    height: 15rem;
+  width: 100%;
+  height: 13rem;
+}
+.my-bullet-active {
+  background: #75a342;
+  opacity: 1;
 }
 </style>
