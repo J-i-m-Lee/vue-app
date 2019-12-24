@@ -8,6 +8,7 @@
       <Like :like_list="likeList" />
       <TopIcon v-if="showTop" @scrollTop="scrollToTop" />
     </div>
+    
     <van-loading
       size="24px"
       vertical
@@ -68,7 +69,8 @@ export default {
       // 做缓动动画返回顶部
       animate(document.documentElement || document.body, { scrollTop: "0" }, 400, "ease-out")
     }
-  }
+  },
+
 }
 </script>
 <style lang="less" scoped>
