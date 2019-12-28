@@ -8,14 +8,15 @@
       <Like :like_list="likeList" />
       <TopIcon v-if="showTop" @scrollTop="scrollToTop" />
     </div>
-    
+
     <van-loading
       size="24px"
       vertical
       v-else
       color="#75a342"
       style="position: relative; top: 50%; transform:translateY(-50%)"
-      >加载中...</van-loading>
+      >加载中...</van-loading
+    >
   </div>
 </template>
 
@@ -50,27 +51,33 @@ export default {
       showTop: false
     }
   },
-  async created() {
-    const res = await getHomeData()
-    console.log(res)
-    if (res.success === true) {
-      this.bannerList = res.data.list[0].icon_list
-      this.navList = res.data.list[2].icon_list
-      this.activList = res.data.list[3].product_list
-      this.likeList = res.data.list[12].product_list
-      this.showLoading = false
-      showBack(status => {
-        this.showTop = status
-      })
-    }
+  created() {
+    this.reqData();
   },
   methods: {
+    async reqData() {
+      const res = await getHomeData()
+      if (res.success) {
+        this.bannerList = res.data.list[0].icon_list
+        this.navList = res.data.list[2].icon_list
+        this.activList = res.data.list[3].product_list
+        this.likeList = res.data.list[12].product_list
+        this.showLoading = false
+        showBack(status => {
+          this.showTop = status
+        })
+      }
+    },
     scrollToTop() {
       // 做缓动动画返回顶部
-      animate(document.documentElement || document.body, { scrollTop: "0" }, 400, "ease-out")
+      animate(
+        document.documentElement || document.body,
+        { scrollTop: "0" },
+        400,
+        "ease-out"
+      )
     }
-  },
-
+  }
 }
 </script>
 <style lang="less" scoped>

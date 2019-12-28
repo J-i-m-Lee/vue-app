@@ -2,17 +2,15 @@
   <div class="wrapper" data-index="3">
     <div class="itemWrapper">
       <div class="imageWrapper">
-        <img
-          class="image"
-          :src="product.small_image"
-          :alt="product.spec"
-        />
+        <img class="image" :src="product.small_image" :alt="product.spec" />
       </div>
       <div>
-        <div class="name">{{product.name}}</div>
-        <div class="originPrice">{{product.origin_price}}</div>
+        <div class="name">{{ product.name }}</div>
+        <div class="originPrice">{{ product.origin_price | moneyFormat }}</div>
         <div class="priceWrapper">
-          <div class="price">￥<span class="f28">{{product.price}}</span>99</div>
+          <div class="price">
+            <span class="f28">{{ product.price | moneyFormat }}</span>
+          </div>
           <div class="iconCartWrapper">
             <svg viewBox="0 0 52 52" class="icon icon-60">
               <defs>
@@ -65,7 +63,7 @@ export default {
   name: "ActivityItem",
   components: {},
   props: {
-      product:Object
+    product: Object
   },
   data() {
     return {}

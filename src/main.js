@@ -15,6 +15,7 @@ import './style/common.less';
 // 3. 引入全局UI组件库-vant
 import '@/plugins/vant';
 import './config/rem';
+import './config/filters'
 
 Vue.config.productionTip = false
 

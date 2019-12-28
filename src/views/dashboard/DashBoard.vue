@@ -1,15 +1,18 @@
 <template>
   <div id="dashBoard">
-    <router-view></router-view>
+    <keep-alive>
+      <router-view v-if="$route.meta.keepAlive" />
+    </keep-alive>
+    <router-view v-if="!$route.meta.keepAlive" />
 
-    <van-tabbar v-model="active" active-color="#75a342" >
+    <van-tabbar v-model="active" active-color="#75a342">
       <van-tabbar-item replace to="/dashboard/home">
         <span>首页</span>
         <img
           slot="icon"
           slot-scope="props"
           :src="props.active ? home_icon.active : home_icon.inactive"
-        >
+        />
       </van-tabbar-item>
       <van-tabbar-item replace to="/dashboard/category">
         <span>分类</span>
@@ -17,15 +20,15 @@
           slot="icon"
           slot-scope="props"
           :src="props.active ? category_icon.active : category_icon.inactive"
-        >
+        />
       </van-tabbar-item>
       <van-tabbar-item replace to="/dashboard/cart">
         <span>购物车</span>
         <img
           slot="icon"
           slot-scope="props"
-          :src="props.active ?  cart_icon.active :  cart_icon.inactive"
-        >
+          :src="props.active ? cart_icon.active : cart_icon.inactive"
+        />
       </van-tabbar-item>
       <van-tabbar-item replace to="/dashboard/mine">
         <span>我的</span>
@@ -33,7 +36,7 @@
           slot="icon"
           slot-scope="props"
           :src="props.active ? mine_icon.active : mine_icon.inactive"
-        >
+        />
       </van-tabbar-item>
     </van-tabbar>
   </div>
@@ -46,7 +49,7 @@ export default {
   props: {},
   data() {
     return {
-      active: 0,
+      active: Number(sessionStorage.getItem("activeIndex")) || 0,
       home_icon: {
         inactive: require("@/images/tabbar/home_default.png"),
         active: require("@/images/tabbar/home_selected.png")
@@ -63,9 +66,14 @@ export default {
         inactive: require("@/images/tabbar/mine_default.png"),
         active: require("@/images/tabbar/mine_selected.png")
       }
-    };
+    }
+  },
+  watch: {
+    active(value) {
+      sessionStorage.setItem("activeIndex", value)
+    }
   }
-};
+}
 </script>
 <style lang="less" scoped>
 #dashBoard {

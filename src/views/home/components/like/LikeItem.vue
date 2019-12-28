@@ -3,7 +3,7 @@
     <div class="content">
       <div class="imageWrapper">
         <div class="LazyLoad is-visible">
-          <van-image  class="image" :src="product.small_image">
+          <van-image class="image" :src="product.small_image">
             <template v-slot:loading>
               <van-loading type="spinner" size="20" />
             </template>
@@ -20,8 +20,10 @@
         <div class="priceWrapper">
           <div class="priceInfo">
             <div class="pricePart">
-              <div class="price">{{ product.price }}</div>
-              <div class="originPrice">{{ product.origin_price }}</div>
+              <div class="price">{{ product.price | moneyFormat }}</div>
+              <div class="originPrice">
+                {{ product.origin_price | moneyFormat }}
+              </div>
             </div>
           </div>
           <div class="iconCartWrapper">
