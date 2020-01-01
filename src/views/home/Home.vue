@@ -30,6 +30,10 @@ import TopIcon from "./components/topIcon/TopIcon"
 import { getHomeData } from "../../service/api/index"
 import { showBack, animate } from "@/config/global.js"
 
+import PubSub from "pubsub-js"
+import { mapMutations, mapState } from "vuex"
+import { Toast } from 'vant';
+
 export default {
   name: "Home",
   components: {
@@ -52,9 +56,27 @@ export default {
     }
   },
   created() {
-    this.reqData();
+    this.reqData()
+  },
+  mounted() {
+    // 订阅消息（添加到购物车的消息）
+    PubSub.subscribe("homeAddToCart", (msg, goods) => {
+      if (msg === "homeAddToCart") {
+        this.ADD_GOODS({
+          goodsId: goods.id,
+          goodsName: goods.name,
+          smallImage: goods.small_image,
+          goodsPrice: goods.price
+        })
+        Toast({
+          message: "添加到购物车成功！",
+          duration: 800
+        })
+      }
+    })
   },
   methods: {
+    ...mapMutations(["ADD_GOODS"]),
     async reqData() {
       const res = await getHomeData()
       if (res.success) {

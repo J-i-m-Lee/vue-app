@@ -26,7 +26,7 @@
               </div>
             </div>
           </div>
-          <div class="iconCartWrapper">
+          <div class="iconCartWrapper" @click="addToCart(product)">
             <svg viewBox="0 0 52 52" class="icon iconCart">
               <defs>
                 <radialGradient
@@ -74,6 +74,7 @@
 </template>
 
 <script>
+import PubSub from "pubsub-js"
 export default {
   name: "LikeItem",
   components: {},
@@ -82,6 +83,11 @@ export default {
   },
   data() {
     return {}
+  },
+  methods: {
+    addToCart(goods) {
+      PubSub.publish("homeAddToCart", goods)
+    }
   }
 }
 </script>

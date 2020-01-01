@@ -68,6 +68,7 @@
 </template>
 
 <script>
+import PubSub from "pubsub-js"
 export default {
   name: "ProductItem",
   components: {},
@@ -76,6 +77,11 @@ export default {
   },
   data() {
     return {}
+  },
+  methods: {
+    addToCart(goods) {
+      PubSub.publish("categoryAddToCart", goods)
+    }
   }
 }
 </script>

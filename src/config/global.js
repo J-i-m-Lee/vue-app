@@ -197,3 +197,30 @@ export const animate = (element, target, duration = 400, mode = 'ease-out', call
         })
     }, 20);
 };
+
+//本地存储
+export const setStore = (name, data) => {
+    if (!name) {
+        return;
+    }
+    if (typeof data !=='string') {
+        data = JSON.stringify(data);
+    }
+    window.localStorage.setItem(name,data);
+}
+
+/*
+  本地化获取
+*/
+export const  getStore = (name)=>{
+    if(!name) return;
+    return window.localStorage.getItem(name);
+};
+
+/*
+  本地化删除
+*/
+export const  removeStore = (name)=>{
+    if(!name) return;
+    return window.localStorage.removeItem(name);
+};

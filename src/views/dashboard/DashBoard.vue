@@ -22,7 +22,7 @@
           :src="props.active ? category_icon.active : category_icon.inactive"
         />
       </van-tabbar-item>
-      <van-tabbar-item replace to="/dashboard/cart">
+      <van-tabbar-item replace to="/dashboard/cart" :info="dataNum>0?dataNum:''">
         <span>购物车</span>
         <img
           slot="icon"
@@ -43,6 +43,7 @@
 </template>
 
 <script>
+import { mapState, mapMutations } from "vuex"
 export default {
   name: "DashBoard",
   components: {},
@@ -67,6 +68,26 @@ export default {
         active: require("@/images/tabbar/mine_selected.png")
       }
     }
+  },
+  mounted() {
+    this.INIT_SHOP_CART()
+  },
+  computed: {
+    ...mapState(["shopCart"]),
+    dataNum() {
+      if (this.shopCart) {
+        let num = 0
+        Object.values(this.shopCart).forEach(item => {
+          num += item.num
+        })
+        return num
+      } else {
+        return 0
+      }
+    }
+  },
+  methods: {
+    ...mapMutations(["INIT_SHOP_CART"])
   },
   watch: {
     active(value) {

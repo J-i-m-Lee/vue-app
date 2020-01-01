@@ -5,20 +5,20 @@
       <!--左边-->
       <div class="leftWrapper">
         <ul class="wrapper">
-          <li class="categoryItem"
-           v-for="(item, index) in categories" :key="item.id"
-           :class=" {selected:currentItem===index}"
-           @click="clickItem(index)"
-           ref="menuList"
-           >
-            <span class="textWrapper">{{item.name}}</span>
-
+          <li
+            class="categoryItem"
+            v-for="(item, index) in categories"
+            :key="item.id"
+            :class="{ selected: currentItem === index }"
+            @click="clickItem(index)"
+            ref="menuList"
+          >
+            <span class="textWrapper">{{ item.name }}</span>
           </li>
         </ul>
       </div>
 
-    <ContentView :categoriesDetailData="categoriesDetail"/>
-
+      <ContentView :categoriesDetailData="categoriesDetail" />
     </div>
     <van-loading
       size="24px"
@@ -36,6 +36,10 @@ import BScroll from "better-scroll"
 import { getCategories, getCategoriesDetail } from "../../service/api/index"
 import Header from "./components/Header"
 import ContentView from "./components/ContentView"
+
+import PubSub from "pubsub-js"
+import { mapMutations, mapState } from "vuex"
+import { Toast } from "vant"
 export default {
   name: "Category",
   components: {
@@ -48,33 +52,51 @@ export default {
       showLoading: true,
       categories: [],
       categoriesDetail: [],
-      currentItem:0
+      currentItem: 0
     }
   },
   created() {
     this.initData()
   },
+  mounted() {
+    // 订阅消息（添加到购物车的消息）
+    PubSub.subscribe("categoryAddToCart", (msg, goods) => {
+      if (msg === "categoryAddToCart") {
+        this.ADD_GOODS({
+          goodsId: goods.id,
+          goodsName: goods.name,
+          smallImage: goods.small_image,
+          goodsPrice: goods.price
+        })
+        Toast({
+          message: "添加到购物车成功！",
+          duration: 800
+        })
+      }
+    })
+  },
   methods: {
+    ...mapMutations(["ADD_GOODS"]),
     async initData() {
       let leftData = await getCategories()
-      console.log(leftData);
+      console.log(leftData)
       if (leftData.success) {
         this.categories = leftData.data.cate
       }
-      let rightData = await getCategoriesDetail('/lk001')
+      let rightData = await getCategoriesDetail("/lk001")
       if (rightData.success) {
         this.categoriesDetail = rightData.data.cate
       }
-      this.showLoading = false;
-      this.$nextTick(()=>{
-        this.leftSroll = new BScroll('.leftWrapper',{probeType:3})
+      this.showLoading = false
+      this.$nextTick(() => {
+        this.leftSroll = new BScroll(".leftWrapper", { probeType: 3 })
       })
     },
-   async clickItem(index){
-      this.currentItem=index;
-      let el = this.$refs.menuList[index];
-      this.leftSroll.scrollToElement(el, 300);
-      let rightData = await getCategoriesDetail(`/lk00${index+1}`)
+    async clickItem(index) {
+      this.currentItem = index
+      let el = this.$refs.menuList[index]
+      this.leftSroll.scrollToElement(el, 300)
+      let rightData = await getCategoriesDetail(`/lk00${index + 1}`)
       if (rightData.success) {
         this.categoriesDetail = rightData.data.cate
       }
