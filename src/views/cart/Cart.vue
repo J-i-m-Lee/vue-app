@@ -3,7 +3,7 @@
     <!--头部区域-->
     <header class="titleWrapper">
       <h4><strong>购物车</strong></h4>
-      <button class="clearCart">清空购物车</button>
+      <button class="clearCart" @click="clearCart">清空购物车</button>
     </header>
     <div class="contentWrapper">
       <!--中间内容-->
@@ -19,6 +19,7 @@
                 href="javascript:;"
                 class="cartCheckBox"
                 :checked="goods.checked"
+                @click.stop="singerGoodsSelected(goods.id)"
               ></a>
             </div>
             <div class="center">
@@ -31,7 +32,17 @@
                 <div class="shopDeal">
                   <span @click="removeOutCart(goods.id, goods.num)">-</span>
                   <input disabled type="number" v-model="goods.num" />
-                  <span>+</span>
+                  <span
+                    @click="
+                      addToCart(
+                        goods.id,
+                        goods.name,
+                        goods.small_image,
+                        goods.price
+                      )
+                    "
+                    >+</span
+                  >
                 </div>
               </div>
             </div>
@@ -41,14 +52,19 @@
       <!--底部通栏-->
       <div class="tabBar">
         <div class="tabBarLeft">
-          <a href="javascript:;" class="cartCheckBox"></a>
+          <a
+            href="javascript:;"
+            class="cartCheckBox"
+            :checked="isSelectedAll"
+            @click.stop="selectedAllGoods(isSelectedAll)"
+          ></a>
           <span style="font-size: 16px;">全选</span>
           <div class="selectAll">
-            合计：<span class="totalPrice">199.00</span>
+            合计：<span class="totalPrice">{{ totalPrice | moneyFormat }}</span>
           </div>
         </div>
         <div class="tabBarRight">
-          <a href="#" class="pay">去结算(3)</a>
+          <a href="#" class="pay">去结算({{ goodsCount }})</a>
         </div>
       </div>
     </div>
@@ -57,7 +73,7 @@
 
 <script>
 import { mapState, mapMutations } from "vuex"
-import { Dialog } from "vant"
+import { Dialog, Col, CellGroup } from "vant"
 export default {
   name: "Cart",
   components: {},
@@ -66,10 +82,45 @@ export default {
     return {}
   },
   computed: {
-    ...mapState(["shopCart"])
+    ...mapState(["shopCart"]),
+
+    // 0. 选中商品的总件数
+    goodsCount() {
+      let goodsCount = 0
+      Object.values(this.shopCart).forEach(goods => {
+        if (goods.checked) {
+          goodsCount += 1
+        }
+      })
+      return goodsCount
+    },
+
+    isSelectedAll() {
+      let tag = Object.keys(this.shopCart).length > 0
+      Object.values(this.shopCart).forEach(goods => {
+        if (!goods.checked) {
+          tag = false
+        }
+      })
+      return tag
+    },
+    // 2. 计算商品总价
+    totalPrice() {
+      let totalPrice = 0
+      Object.values(this.shopCart).forEach(goods => {
+        totalPrice += goods.num * goods.price
+      })
+      return totalPrice
+    }
   },
   methods: {
-    ...mapMutations(["REDUCE_CART"]),
+    ...mapMutations([
+      "REDUCE_CART",
+      "ADD_GOODS",
+      "SELECTED_SINGER_GOODS",
+      "SELECTED_All_GOODS",
+      "CLEAR_CART"
+    ]),
     removeOutCart(goodsId, goodsNum) {
       if (goodsNum > 1) {
         this.REDUCE_CART({ goodsId })
@@ -86,6 +137,33 @@ export default {
             // do nothing
           })
       }
+    },
+    addToCart(goodsId, goodsName, smallImage, goodsPrice) {
+      this.ADD_GOODS({
+        goodsId,
+        goodsName,
+        smallImage,
+        goodsPrice
+      })
+    },
+    singerGoodsSelected(goodsId) {
+      this.SELECTED_SINGER_GOODS({ goodsId })
+    },
+    selectedAllGoods(isSelectedAll) {
+      this.SELECTED_All_GOODS({ isSelectedAll })
+    },
+    clearCart() {
+      Dialog.confirm({
+        title: "小撩温馨提示",
+        message: "确定清空商品吗?"
+      })
+        .then(() => {
+          this.CLEAR_CART()
+        })
+        .catch(() => {
+          // 点击了取消
+          // do nothing
+        })
     }
   }
 }
