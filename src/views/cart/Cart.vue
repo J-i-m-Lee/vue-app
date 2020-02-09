@@ -64,7 +64,7 @@
           </div>
         </div>
         <div class="tabBarRight">
-          <a href="#" class="pay">去结算({{ goodsCount }})</a>
+          <router-link class="pay" tag="a" to="/confirmOrder">去结算({{ goodsCount }})</router-link>
         </div>
       </div>
     </div>
