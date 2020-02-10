@@ -8,6 +8,9 @@ import { NavBar } from 'vant';
 import { AddressList } from 'vant';
 import { ContactCard, ContactList, ContactEdit } from 'vant';
 import { AddressEdit } from 'vant';
+import { Cell, CellGroup } from 'vant';
+import { SubmitBar } from 'vant';
+import { Grid, GridItem } from 'vant';
 Vue.use(Tabbar)
     .use(TabbarItem)
     .use(Loading)
@@ -19,4 +22,9 @@ Vue.use(Tabbar)
     .use(ContactList)
     .use(ContactEdit)
     .use(AddressEdit)
-    .use(AddressList);
+    .use(AddressList)
+    .use(Cell)
+    .use(CellGroup)
+    .use(SubmitBar)
+    .use(Grid)
+    .use(GridItem);

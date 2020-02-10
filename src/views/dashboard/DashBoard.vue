@@ -100,6 +100,5 @@ export default {
 #dashBoard {
   width: 100%;
   height: 100%;
-  background-color: #ffff00;
 }
 </style>

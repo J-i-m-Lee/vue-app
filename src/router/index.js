@@ -1,6 +1,7 @@
 import Vue from "vue"
 import Router from "vue-router"
 import DashBoard from "./../views/dashboard/DashBoard.vue"
+const Login = () => import('./../views/login/Login.vue');
 const Home = () => import('./../views/home/Home.vue');
 const Mine = () => import('./../views/mine/Mine.vue');
 const Category = () => import('./../views/category/Category.vue');
@@ -15,6 +16,7 @@ Vue.use(Router)
 export default new Router({
     routes: [
         { path: "/", redirect: "/dashboard" },
+        { path: '/login', name: 'login', component: Login },
         {
             path: "/dashboard",
             name: "dashboard",
@@ -24,7 +26,7 @@ export default new Router({
                 { path: 'home', name: 'home', component: Home, meta: { keepAlive: true } },
                 { path: 'mine', name: 'mine', component: Mine, meta: { keepAlive: true } },
                 { path: 'category', name: 'category', component: Category },
-                { path: 'cart', name: 'cart', component: Cart },
+                { path: 'cart', name: 'cart', component: Cart }
 
             ]
         },

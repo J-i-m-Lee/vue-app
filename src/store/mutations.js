@@ -1,4 +1,4 @@
-import { ADD_GOODS, INIT_SHOP_CART, REDUCE_CART, SELECTED_SINGER_GOODS, SELECTED_All_GOODS,CLEAR_CART } from './mutations-type'
+import { ADD_GOODS, INIT_SHOP_CART, REDUCE_CART, SELECTED_SINGER_GOODS, SELECTED_All_GOODS, CLEAR_CART,USER_INFO,INIT_USER_INFO,RESET_USER_INFO} from './mutations-type'
 import { setStore, getStore } from '../config/global';
 import Vue from 'vue'
 export default {
@@ -73,13 +73,35 @@ export default {
                 Vue.set(goods, 'checked', !isSelectedAll);
             }
         });
-        state.shopCart = {...shopCart};
+        state.shopCart = { ...shopCart };
     },
 
     [CLEAR_CART](state) {
         state.shopCart = null;
         state.shopCart = { ...state.shopCart };
         setStore('shopCart', state.shopCart);
+    },
+
+    // 7. 保存用户信息报本地
+    [USER_INFO](state, { userInfo }) {
+        state.userInfo = userInfo;
+        setStore('userInfo', state.userInfo);
+    },
+
+    // 8. 获取用户信息
+    [INIT_USER_INFO](state) {
+        // 8.1 获取用户信息
+        let userInfo = getStore('userInfo');
+        // 8.2 判断
+        if (userInfo) {
+            state.userInfo = JSON.parse(userInfo);
+        }
+    },
+
+    // 9. 退出登录
+    [RESET_USER_INFO](state) {
+        state.userInfo = {};
+        removeStore('userInfo');
     }
 
 
